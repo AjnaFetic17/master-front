@@ -1,0 +1,82 @@
+<form autocomplete="off" [formGroup]="form">
+  <div
+    class="file-input"
+    *ngIf="!file && !uploadInProgress; else fileUpload"
+    class="file-container"
+  >
+    <div class="text">
+      <div *ngIf="!disabled">
+        {{ "SCANS.UPLOAD" | translate }}
+        <label for="file"
+          ><span>{{ "SCANS.FROM_DEVICE" | translate }}</span
+          >.</label
+        >
+      </div>
+    </div>
+    <input id="file" type="file" hidden (change)="onFileSelected($event)" />
+    <mat-icon svgIcon="camera"></mat-icon>
+  </div>
+</form>
+
+<ng-template #fileUpload>
+  <div
+    class="file-input completed-file-input"
+    *ngIf="!uploadInProgress; else loading"
+  >
+    <!-- <div class="icon-container uploaded-icon">
+      <mat-icon svgIcon="file_uploaded"></mat-icon>
+    </div> -->
+    <div class="upload-failed" *ngIf="!file">
+      {{ "WORK_ORDERS.UPLOAD_FAILED" | translate }}
+    </div>
+    <div class="text file-name" [class.upload-unsucessful]="file">
+      <div
+        class="file-name-container text-truncate"
+        *ngIf="file$ | async as scan"
+      >
+        {{ scan.imageB64 }}
+      </div>
+      <!-- <div class="input-container" *ngIf="file">
+        <form autocomplete="off" [formGroup]="form">
+          <mat-form-field class="bg-white-xx ml-18" appearance="fill">
+            <mat-label>{{
+              "WORK_ORDERS.DOCUMENT_NUMBER" | translate
+            }}</mat-label>
+            <input matInput formControlName="documentNumber" />
+          </mat-form-field>
+        </form>
+      </div> -->
+      <!-- <mat-icon
+        *ngIf="!disabled"
+        svgIcon="delete"
+        class="delete"
+        (click)="file = undefined; saveFormState()"
+      >
+      </mat-icon> -->
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <div class="file-input">
+    <div class="icon-container">
+      <mat-icon svgIcon="file_uploaded"></mat-icon>
+    </div>
+    <div class="upload-progress-container">
+      <div class="progress-container">
+        <div class="pb-10px">
+          {{ "WORK_ORDERS.DOCUMENT_LOADING" | translate }}
+        </div>
+        <mat-progress-bar
+          class="red-progress"
+          mode="determinate"
+          *ngIf="uploadProgress$ | async as progress"
+          [value]="progress"
+        ></mat-progress-bar>
+        <div class="pt-10px" *ngIf="uploadProgress$ | async as progress">
+          {{ progress ? progress + "%" : "" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

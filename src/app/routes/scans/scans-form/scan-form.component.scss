@@ -1,0 +1,195 @@
+.file-container {
+  position: relative;
+  background: #fff;
+  box-shadow: 0px 4px 15px rgba(136, 102, 168, 0.35);
+  border-radius: 4px;
+  padding: 24px 40px;
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-weight: 500;
+    color: #9D76C1;
+    cursor: pointer;
+  }
+
+  >div {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .mat-icon {
+    width: 45px;
+    height: 53px;
+    //margin: 30px 40px;
+    position: relative;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.delete-icon {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .mat-icon {
+    width: 9px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
+
+.file {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+}
+
+.file-input {
+  position: relative;
+  height: 120px;
+  background: #fff;
+  box-shadow: 0px 4px 15px rgba(136, 102, 168, 0.35);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  color: #5B0888;
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 30px;
+
+  .icon-container {
+    position: relative;
+    //left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    .mat-icon {
+      width: 45px;
+      height: 53px;
+      margin: 30px 40px;
+    }
+  }
+}
+
+.file-input label {
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+span {
+  font-weight: 400;
+  color: #9D76C1;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+.noFile {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.file-name {
+  flex-direction: row;
+  margin-left: 130px;
+}
+
+.delete-icon {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .mat-icon {
+    width: 9px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
+
+.upload-progress-container {
+  display: flex;
+  align-items: center;
+  margin-left: 150px;
+  flex-grow: 1;
+
+  .mat-icon {
+    margin: 0 40px 0 100px;
+    cursor: pointer;
+  }
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 560px;
+}
+
+.pb-10px {
+  padding-bottom: 10px;
+}
+
+.pt-10px {
+  padding-top: 10px;
+}
+
+.red-progress {
+  padding: 2px;
+}
+
+.text.file-name {
+  margin-left: 75px;
+
+  .input-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-icon {
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+.file-input.completed-file-input {
+
+  .file-name-container {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: flex-start;
+    max-width: 280px;
+    margin-left: 30px;
+  }
+}
+
+.upload-unsucessful {
+  justify-content: space-between !important;
+
+  .mat-icon {
+    margin-right: 20px;
+  }
+}

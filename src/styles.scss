@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+.close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 32px;
+  cursor: pointer;
+}
+
+.mr-36 {
+  margin-right: 36px;
+}
+
+.mb-36 {
+  margin-bottom: 36px;
+}
+
+.mb-24 {
+  margin-bottom: 24px;
+}
+
+.mt-36 {
+  margin-top: 36px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+textarea {
+  resize: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "Helvetica Neue", sans-serif;
+}
