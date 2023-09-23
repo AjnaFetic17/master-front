@@ -1,28 +1,19 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { ScanResult, ScansService } from '../state';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/core/validation.service';
 import { replaceEmptyStringsWithNull } from 'src/app/shared/helpers/replace-empty-strings-with-null';
 import { strictRequiredValidator } from 'src/app/shared/validators';
-import {
-  Observable,
-  Subject,
-  catchError,
-  takeUntil,
-  tap,
-  throwError,
-} from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ScansQuery } from '../state/scans.query';
+import { ScansStore } from '../state/scans.store';
 
 @Component({
   selector: 'unet-scan-form',
@@ -32,6 +23,7 @@ import { ScansQuery } from '../state/scans.query';
 export class ScanFormComponent implements OnInit, OnDestroy {
   @Input() disabled!: boolean;
   @Output() save = new EventEmitter<any>();
+  imageURL?: string;
 
   private destroy$ = new Subject<void>();
 
@@ -44,6 +36,7 @@ export class ScanFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private scansQuery: ScansQuery,
+    private scansStore: ScansStore,
     public validationService: ValidationService,
     private formBuilder: FormBuilder,
     private scansService: ScansService
@@ -58,34 +51,12 @@ export class ScanFormComponent implements OnInit, OnDestroy {
       documentNumber: [null, strictRequiredValidator],
     });
 
-    //this.form.patchValue({ ...this.item });
-
     if (this.disabled) {
       this.form.disable();
     }
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$));
   }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['item'] && this.item) {
-  //     this.employees = [
-  //       ...(this.item.employeeIds?.map(
-  //         (employeeId: string) => this.employeesQuery.getEntity(employeeId)!
-  //       ) || []),
-  //     ];
-  //     this.service = this.item?.serviceId
-  //       ? { ...this.servicesQuery.getEntity(this.item.serviceId)! }
-  //       : undefined;
-  //     this.file = this.item.file;
-
-  //     this.form.markAsUntouched();
-  //     this.form.patchValue({
-  //       ...this.item,
-  //       documentNumber: this.file?.documentNumber || null,
-  //     });
-  //   }
-  // }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -101,7 +72,20 @@ export class ScanFormComponent implements OnInit, OnDestroy {
         this.file = true;
         this.uploadInProgress = false;
       });
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageURL = reader.result as string;
+      };
+      reader.onload = (e: any) => {
+        console.log(e.target.result);
+        this.scansStore.update((state) => ({
+          ...state,
+          scan: e.target.result,
+        }));
+      };
+
+      reader.readAsDataURL(selectedFile!);
     }
-    console.log(this.uploadInProgress);
   }
 }

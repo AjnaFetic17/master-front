@@ -1,6 +1,8 @@
 {
   "SCANS": {
     "UPLOAD": "Here you can upload your CT scans",
-    "FROM_DEVICE": "from your device"
+    "FROM_DEVICE": "from your device",
+    "UPLOAD_FAILED": "Sorry, something went wrong.",
+    "DOCUMENT_LOADING": "Uploading the scan"
   }
 }

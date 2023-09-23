@@ -3,7 +3,8 @@ import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 import { ScanResult } from './scans.models';
 
 export interface ScansState extends EntityState<ScanResult> {
-  file: ScanResult;
+  file: ScanResult | undefined;
+  scan: string | undefined;
   uploadProgress: number;
 }
 
@@ -14,6 +15,7 @@ export class ScansStore extends EntityStore<ScansState, ScanResult> {
     super({
       file: undefined,
       uploadProgress: 0,
+      scan: undefined,
     });
   }
 }

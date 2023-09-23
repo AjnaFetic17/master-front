@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
 import { ScanResult, ScansService } from './state';
+import { ScansQuery } from './state/scans.query';
 
 @Component({
   templateUrl: './scans.component.html',
@@ -8,47 +9,10 @@ import { ScanResult, ScansService } from './state';
 })
 export class ScansComponent implements OnInit {
   //scans$ = this.scansService.getscans() as Observable<ScanResult[]>;
-  scan$!: Observable<ScanResult | null>;
-
-  isModalOpen: boolean = false;
-  isConfirmModalOpen: boolean = false;
-
-  idToDelete?: string;
-
-  constructor(
-    private scansService: ScansService //private toastManager: ToastManager
-  ) {}
+  scan$ = this.scansQuery.select((state) => state.scan);
+  file$ = this.scansQuery.select((state) => state.file);
+  displayPrediction = false;
+  constructor(private scansQuery: ScansQuery) {}
 
   ngOnInit(): void {}
-
-  // changeModalStatus(event: boolean) {
-  //   this.isModalOpen = !this.isModalOpen;
-  //   if (event) {
-  //     this.scans$ = this.scansService.getscans();
-  //   }
-  // }
-
-  // isConfirmed(event: boolean) {
-  //   if (event === true && this.idToDelete) {
-  //     this.scansService.deleteScanResult(this.idToDelete!).subscribe();
-  //     this.scans$ = this.scansService.getscans();
-  //   }
-  //   this.isConfirmModalOpen = !this.isConfirmModalOpen;
-  // }
-
-  // delete(id: string): void {
-  //   this.isConfirmModalOpen = !this.isConfirmModalOpen;
-  //   this.idToDelete = id;
-  // }
-
-  // createOrEdit(carId: string | undefined): void {
-  //   if (carId) {
-  //     this.car$ = this.scansService
-  //       .getScanResultById(carId)
-  //       .pipe(tap(() => (this.isModalOpen = true)));
-  //   } else {
-  //     this.car$ = of(null);
-  //     this.isModalOpen = true;
-  //   }
-  // }
 }

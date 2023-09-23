@@ -3,7 +3,25 @@
   <h1>Lung cancer nodule segmentation</h1>
 </div>
 <div class="content">
-  <div class="left-column">
+  <div class="column">
     <unet-scan-form></unet-scan-form>
+    <unet-scan-preview
+      *ngIf="scan$ | async as scan"
+      [scan$]="scan$"
+    ></unet-scan-preview>
+    <div class="button-wrapper" *ngIf="!displayPrediction">
+      <button
+        *ngIf="scan$ | async as scan"
+        (click)="displayPrediction = !displayPrediction"
+      >
+        Get prediction
+      </button>
+    </div>
+  </div>
+  <div class="column">
+    <unet-scan-preview
+      *ngIf="displayPrediction"
+      [scan$]="scan$"
+    ></unet-scan-preview>
   </div>
 </div>
