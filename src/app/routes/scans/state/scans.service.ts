@@ -12,69 +12,41 @@ export class ScansService {
     return this.http.post<ScanResult>('/api/upload', file);
   }
 
-  getPresignedUrl(id: string): Observable<string> {
-    return this.http.get<string>(`/api/files/${id}`);
-  }
-
-  markAsUploaded(file: File): Promise<ScanResult> {
-    return lastValueFrom(this.http.post<ScanResult>(`/api/files/`, file));
-  }
-
   async getPrediction(fileUpload: File): Promise<ScanResult | undefined> {
     try {
       this.scansStore.update({ uploadProgress: 0 });
       const formData = new FormData();
       formData.append('file', fileUpload, fileUpload.name);
-
-      const response = await this.http
-        .post('/api/upload', formData, {
-          reportProgress: true,
-          observe: 'events',
-        })
-        .pipe(
-          map((event: any) => {
-            if (event.type == HttpEventType.UploadProgress) {
-              this.scansStore.update((state) => ({
-                ...state,
-                uploadProgress: Math.round((100 / event.total) * event.loaded),
-              }));
-            }
+      const response = await lastValueFrom(
+        this.http
+          .post('/api/upload', formData, {
+            reportProgress: true,
+            observe: 'events',
           })
-        );
+          .pipe(
+            tap((event: any) => {
+              if (event.type === HttpEventType.UploadProgress) {
+                const progress = Math.round((100 / event.total) * event.loaded);
+                this.scansStore.update({ uploadProgress: progress });
+              }
+            })
+          )
+      );
+
       const fileObservables$ = await this.uploadFile(formData).pipe(
-        tap((scan) => {
+        tap((scan: any) => {
+          let img = 'data:image/png;base64,' + scan.image;
           this.scansStore.update((state) => ({
-            file: scan,
+            ...state,
+            file: {
+              found: scan.found,
+              imageB64: img,
+            },
           }));
         })
       );
-      // const response = await this.http
-      //   .post<ScanResult>('/api/upload', formData, {
-      //     reportProgress: true,
-      //     observe: 'events',
-      //   })
-      //   .pipe(
-      //     map((event: any) => {
-      //       Math.round((100 / event.total) * event.loaded);
-      //       if (event.type == HttpEventType.UploadProgress) {
-      //         console.log(Math.round((100 / event.total) * event.loaded));
-      //         this.scansStore.update({
-      //           uploadProgress: Math.round((100 / event.total) * event.loaded),
-      //         });
-      //       }
-      //     })
-      //   );
 
       return fileObservables$.toPromise();
-
-      // if (response._response.status === 201) {
-      //   return await this.markAsUploaded({
-      //     name: file.name,
-      //     size: file.size,
-      //     mimeType: file.type || 'unknown',
-      //     storageIdentifier: azureName,
-      //   });
-      // }
     } catch (error) {
       return undefined;
     }

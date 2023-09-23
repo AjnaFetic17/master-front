@@ -8,7 +8,7 @@ import { ScansQuery } from '../state/scans.query';
 })
 export class ScanPreviewComponent implements OnInit {
   @Input()
-  scan$: any;
+  src!: string;
   constructor(private scansQuery: ScansQuery) {}
 
   ngOnInit(): void {}

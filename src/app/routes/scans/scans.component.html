@@ -7,7 +7,7 @@
     <unet-scan-form></unet-scan-form>
     <unet-scan-preview
       *ngIf="scan$ | async as scan"
-      [scan$]="scan$"
+      [src]="scan"
     ></unet-scan-preview>
     <div class="button-wrapper" *ngIf="!displayPrediction">
       <button
@@ -19,9 +19,16 @@
     </div>
   </div>
   <div class="column">
-    <unet-scan-preview
-      *ngIf="displayPrediction"
-      [scan$]="scan$"
-    ></unet-scan-preview>
+    <div *ngIf="displayPrediction">
+      <unet-scan-preview
+        *ngIf="file$ | async as file"
+        [src]="file.imageB64"
+      ></unet-scan-preview>
+    </div>
+  </div>
+  <div class="column">
+    <div *ngIf="displayPrediction">
+      <unet-result-preview></unet-result-preview>
+    </div>
   </div>
 </div>

@@ -32,6 +32,7 @@ export class ScanFormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   file$ = this.scansQuery.select((state) => state.file);
   file: boolean = false;
+  fileName?: string;
   uploadInProgress = false;
 
   constructor(
@@ -71,6 +72,7 @@ export class ScanFormComponent implements OnInit, OnDestroy {
       await this.scansService.getPrediction(selectedFile).finally(() => {
         this.file = true;
         this.uploadInProgress = false;
+        this.fileName = selectedFile.name;
       });
 
       const reader = new FileReader();
@@ -78,7 +80,6 @@ export class ScanFormComponent implements OnInit, OnDestroy {
         this.imageURL = reader.result as string;
       };
       reader.onload = (e: any) => {
-        console.log(e.target.result);
         this.scansStore.update((state) => ({
           ...state,
           scan: e.target.result,

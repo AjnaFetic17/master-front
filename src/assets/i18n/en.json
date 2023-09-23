@@ -4,5 +4,10 @@
     "FROM_DEVICE": "from your device",
     "UPLOAD_FAILED": "Sorry, something went wrong.",
     "DOCUMENT_LOADING": "Uploading the scan"
+  },
+  "RESULTS": {
+    "GOOD": "Good news! This algorithm has not found any nodules in your CT scan.",
+    "BAD": "Looks like this algorithm has found nodules in your CT scan. We recommend that you contact your healthcare provider as soon as possible.",
+    "WARNING": "This algorithm is not meant as a substitute for medical professionals. We highly recommend you to check our results with your healthcare provider. This algorithm has accuracy of 0.94% and cannot be fully trusted."
   }
 }

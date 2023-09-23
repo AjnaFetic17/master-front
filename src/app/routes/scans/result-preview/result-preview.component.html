@@ -1,0 +1,9 @@
+<div class="container">
+  <div *ngIf="found" class="result">
+    {{ "RESULTS.GOOD" | translate }}
+  </div>
+  <div *ngIf="!found" class="result">
+    {{ "RESULTS.BAD" | translate }}
+  </div>
+  <h1>{{ "RESULTS.WARNING" | translate }}</h1>
+</div>

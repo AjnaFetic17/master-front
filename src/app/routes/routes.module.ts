@@ -14,9 +14,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { createTranslateLoader } from '../app.module';
 import { HttpClient } from '@angular/common/http';
 import { ScanPreviewComponent } from './scans/scan-preview/scan-preview.component';
+import { ResultPreviewComponent } from './scans/result-preview/result-preview.component';
 
 @NgModule({
-  declarations: [ScansComponent, ScanFormComponent, ScanPreviewComponent],
+  declarations: [ScansComponent, ScanFormComponent, ScanPreviewComponent, ResultPreviewComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
